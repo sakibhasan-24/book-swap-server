@@ -1,5 +1,8 @@
+const errorHandler = require("../helper/errorHandle.js");
 const { User } = require("../model/usermodel.js");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const signUpApi = async (req, res, next) => {
   const userData = req.body;
 
@@ -19,4 +22,26 @@ const signUpApi = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = signUpApi;
+
+// sign in api/log in api
+const signInApi = async (req, res, next) => {
+  const { email, password } = req.body;
+  const validUser = await User.findOne({ email });
+  if (!validUser) {
+    return next(errorHandler(401, "Invalid User"));
+  }
+  const validPassword = bcrypt.compareSync(password, validUser.password);
+  if (!validPassword) {
+    return next(errorHandler(401, "Wrong credintial"));
+  }
+  const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+  //   no need to send password in client
+  const { password: hashedPassword, ...userData } = validUser._doc;
+  res
+    .cookie("token", token, { httpOnly: true })
+    .status(200)
+    .json({ userData, message: "succefully logged in", success: true });
+  //   res.status(200).json({ validUser, message: "logged in", success: true });
+  // we need to create a token
+};
+module.exports = { signUpApi, signInApi };

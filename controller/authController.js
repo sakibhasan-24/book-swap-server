@@ -1,6 +1,6 @@
 const { User } = require("../model/usermodel.js");
 const bcrypt = require("bcryptjs");
-const signUpApi = async (req, res) => {
+const signUpApi = async (req, res, next) => {
   const userData = req.body;
 
   //   save this data in database
@@ -15,7 +15,8 @@ const signUpApi = async (req, res) => {
     await user.save();
     res.status(201).json({ message: "user created", success: true });
   } catch (error) {
-    res.status(501).json({ message: error.message, success: false });
+    // res.status(501).json({ message: error.message, success: false });
+    next(error);
   }
 };
 module.exports = signUpApi;

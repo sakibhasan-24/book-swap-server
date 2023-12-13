@@ -16,3 +16,13 @@ app.use("/signup", authSignUpRoute);
 
 app.listen(port, () => console.log(`Example  app listening on port ${port}!`));
 //
+// create a middleware for handleing error
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const errorMessage = err.message || "internal error";
+  res.status(statusCode).json({
+    success: false,
+    statusCode,
+    errorMessage,
+  });
+});

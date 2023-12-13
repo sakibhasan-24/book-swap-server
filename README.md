@@ -13,3 +13,5 @@
 - email require
 - password require
 - type must String
+
+### user routes

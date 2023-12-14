@@ -32,3 +32,21 @@
 * send token using cookie
 
 # google api
+
+- if user exist then create token and sent it client
+
+* if not exist then create a user and sent it client
+* but we need to create a password for user as it is required in model and we need an unique username and photo
+
+# user update api
+
+- create an update api
+- verify token
+  - if token is not verified then return an error
+  - if token is verified but any error return error
+    - if no error then decoded id it to user.body
+
+* update user
+  - if params id and user id don't match then return an error
+    - if user try to update password then hash it
+    - update it without password

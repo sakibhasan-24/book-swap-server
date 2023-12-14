@@ -44,4 +44,37 @@ const signInApi = async (req, res, next) => {
   //   res.status(200).json({ validUser, message: "logged in", success: true });
   // we need to create a token
 };
-module.exports = { signUpApi, signInApi };
+
+const googleSignIn = async (req, res, next) => {
+  const existingUser = await User.findOne({ email: req.body.email });
+  if (existingUser) {
+    const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
+    res.cookie("token", token, { httpOnly: true });
+    res
+      .status(200)
+      .json({ user: existingUser, message: "logged in", success: true });
+  } else {
+    // as password is required our model we need a demo password
+    // simplycity we use a random number
+    const generatedPassword = Math.trunc(Math.random() * 20000);
+    const username = req.body.username + "_" + Date.now().toFixed(4);
+    // console.log(username);
+    // console.log(username);
+    const newUser = new User({
+      email: req.body.email,
+      password: generatedPassword,
+      username: username,
+      photo: req.body.photoURL,
+    });
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+    await newUser.save();
+    // console.log(newUser);
+    const { password: pass, ...rest } = newUser._doc;
+    res.cookie("token", token, { httpOnly: true }).status(200).json({
+      rest,
+      message: "logged in using Google",
+      success: true,
+    });
+  }
+};
+module.exports = { signUpApi, signInApi, googleSignIn };

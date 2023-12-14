@@ -4,4 +4,5 @@ const router = express.Router();
 
 router.post("", signUpApi.signUpApi);
 router.post("/login", signUpApi.signInApi);
+router.post("/google", signUpApi.googleSignIn);
 module.exports = router;

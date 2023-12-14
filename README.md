@@ -30,3 +30,5 @@
 * if found valid user create a token and return it COOKIE
 * from server though it is hashed no need to send password in server
 * send token using cookie
+
+# google api

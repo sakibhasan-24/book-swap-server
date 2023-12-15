@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookiParser = require("cookie-parser");
 const userRoute = require("./routes/userRoutes.js");
 const authSignUpRoute = require("./routes/authRoutes.js");
+const booksCreateRoute = require("./routes/booksRoutes.js");
 require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGO);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.use("/", userRoute);
+app.use("/books", booksCreateRoute);
 // signup
 app.use("/signup", authSignUpRoute);
 

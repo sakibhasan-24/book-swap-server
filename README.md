@@ -56,3 +56,5 @@
 - check valid user
 - delete it cookies
 - delete it from database
+
+# sign out api

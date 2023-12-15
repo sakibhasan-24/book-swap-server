@@ -50,3 +50,9 @@
   - if params id and user id don't match then return an error
     - if user try to update password then hash it
     - update it without password
+
+# user delete api
+
+- check valid user
+- delete it cookies
+- delete it from database

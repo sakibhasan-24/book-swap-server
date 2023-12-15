@@ -37,6 +37,7 @@ const signInApi = async (req, res, next) => {
   const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
   //   no need to send password in client
   const { password: hashedPassword, ...userData } = validUser._doc;
+  console.log("logged", userData);
   res
     .cookie("token", token, { httpOnly: true })
     .status(200)
@@ -52,7 +53,7 @@ const googleSignIn = async (req, res, next) => {
     res.cookie("token", token, { httpOnly: true });
     res
       .status(200)
-      .json({ user: existingUser, message: "logged in", success: true });
+      .json({ userData: existingUser, message: "logged in", success: true });
   } else {
     // as password is required our model we need a demo password
     // simplycity we use a random number
@@ -71,7 +72,7 @@ const googleSignIn = async (req, res, next) => {
     // console.log(newUser);
     const { password: pass, ...rest } = newUser._doc;
     res.cookie("token", token, { httpOnly: true }).status(200).json({
-      rest,
+      userData: rest,
       message: "logged in using Google",
       success: true,
     });

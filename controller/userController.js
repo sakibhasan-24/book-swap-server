@@ -26,14 +26,32 @@ const updateUser = async (req, res, next) => {
       { new: true }
     );
     const { password: pass, ...rest } = updatedUser._doc;
+    console.log("update", rest);
     return res.status(200).json({
       success: true,
       message: "User Updated Successfully",
-      user: rest,
+      userData: rest,
     });
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { test, updateUser };
+const deleteUser = async (req, res, next) => {
+  if (req.params.id !== req.user.id) {
+    return next(errorHandler(401, "Unauthorized ! you can not access here"));
+  }
+  try {
+    const deleteUser = await User.findByIdAndUpdate(req.params.id);
+    res.clearCookie("token");
+    return res.status(201).json({
+      success: true,
+      message: "User Deleted Successfully",
+      userData: deleteUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { test, updateUser, deleteUser };

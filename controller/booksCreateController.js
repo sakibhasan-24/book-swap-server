@@ -37,4 +37,26 @@ const getAllBooks = async (req, res, next) => {
     }
   }
 };
-module.exports = { booksCreate, getAllBooks };
+const deleteUserBook = async (req, res, next) => {
+  const existBook = await BookListing.findOne({ _id: req.params.id });
+  console.log(existBook);
+  if (!existBook) {
+    return res.status(401).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
+  if (req.user.id !== existBook.owner) {
+    return res.json({
+      success: false,
+      message: "you can not delete it",
+    });
+  }
+  const deleteBook = await BookListing.findByIdAndDelete(req.params.id);
+  return res.status(200).json({
+    success: true,
+    message: "Book deleted successfully",
+    deleteBook: deleteBook,
+  });
+};
+module.exports = { booksCreate, getAllBooks, deleteUserBook };

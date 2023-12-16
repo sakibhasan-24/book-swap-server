@@ -59,4 +59,86 @@ const deleteUserBook = async (req, res, next) => {
     deleteBook: deleteBook,
   });
 };
-module.exports = { booksCreate, getAllBooks, deleteUserBook };
+const updateUserBook = async (req, res, next) => {
+  const existBook = await BookListing.findById({ _id: req.params.id });
+  if (!existBook) {
+    return res.status(401).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
+  if (existBook.owner !== req.user.id) {
+    return res.status(401).json({
+      success: false,
+      message: "you can not update it",
+    });
+  }
+  try {
+    const updatedBook = await BookListing.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Book updated successfully",
+      updatedBook: updatedBook,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const getSingleBook = async (req, res, next) => {
+  try {
+    const book = await BookListing.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({
+        success: false,
+        message: "Book not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Book found",
+      book: book,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+// const updateBook = async (req, res, next) => {
+//   try {
+//     const book = await BookListing.findById(req.params.id);
+//     if (!book) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Book not found",
+//       });
+//     }
+//     if (book.owner !== req.user.id) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "you can not update it",
+//       });
+//     }
+//     const updatedBook = await book.findByIdAndUpdate(req.params.id, req.body, {
+//       new: true,
+//     });
+//     res.status(200).json({
+//       success: true,
+//       message: "Book updated successfully",
+//       updatedBook: updatedBook,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+module.exports = {
+  booksCreate,
+  getAllBooks,
+  deleteUserBook,
+  updateUserBook,
+  getSingleBook,
+};

@@ -65,4 +65,23 @@ const signOut = async (req, res, next) => {
   }
 };
 
-module.exports = { test, updateUser, deleteUser, signOut };
+const getSingleUser = async (req, res, next) => {
+  try {
+    const existingUser = await User.findById(req.params.id);
+    console.log(req.params.id);
+    console.log("a", existingUser);
+    if (!existingUser) {
+      return next(errorHandler(404, "User not found"));
+    }
+    const { password: pass, ...rest } = existingUser._doc;
+    return res.status(200).json({
+      success: true,
+      message: "User Found",
+      userData: rest,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { test, updateUser, deleteUser, signOut, getSingleUser };

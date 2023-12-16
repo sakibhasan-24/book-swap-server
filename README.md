@@ -80,3 +80,18 @@
 - if user id is not in cookies then return an error
 - if user id is in cookies then verify it
 - search based on owner id and return this user list
+
+# user can update books
+
+- create an api
+- if user id is not in cookies then return an error
+- if user id is in cookies then verify it
+- if user id is not same then return an error
+- if user id is same then search based on owner id and return this user list
+- update it
+
+# user can delete books
+
+- create an api
+- if user id is not in cookies then return an error
+- if user id is in cookies then verify it

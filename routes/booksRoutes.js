@@ -3,6 +3,7 @@ const {
   getAllBooks,
   deleteUserBook,
   getSingleBook,
+  allBooks,
 
   updateUserBook,
 } = require("../controller/booksCreateController.js");
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.post("/create", verifyToken, booksCreate);
 
+router.get("/getAllBooks", allBooks);
 router.get("/userbooks/:id", verifyToken, getAllBooks);
 router.get("/getSingleBook/:id", getSingleBook);
 router.delete("/userbooks/:id", verifyToken, deleteUserBook);

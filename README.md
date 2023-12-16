@@ -58,3 +58,25 @@
 - delete it from database
 
 # sign out api
+
+- get current User
+- verify it
+- if not valid user then return an error
+- if valid user then delete it from cookies
+
+# create books
+
+- create book
+- verify token
+- if token is not verified then return an error
+- if token is verified then decode it
+- if user id is not same
+  - return an error
+- create a book based on model
+
+# get a user book list
+
+- create an api
+- if user id is not in cookies then return an error
+- if user id is in cookies then verify it
+- search based on owner id and return this user list

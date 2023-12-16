@@ -10,6 +10,10 @@ const bookSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    address: {
+      type: String,
+      required: true,
+    },
     genre: {
       type: String,
     },
@@ -30,10 +34,19 @@ const bookSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    available: {
+    borrow: {
       type: Boolean,
       default: true,
     },
+    sell: {
+      type: Boolean,
+      default: false,
+    },
+    fixedPrice: {
+      type: Boolean,
+      default: false,
+    },
+
     owner: {
       type: String,
       required: true,

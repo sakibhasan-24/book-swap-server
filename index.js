@@ -9,7 +9,21 @@ require("dotenv").config();
 
 const app = express();
 // app.use(cors());
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(
+  cors({
+    origin: ["https://book-swap-64d94.web.app/", "http://localhost:5173"],
+    credentials: true,
+  })
+);
+// "https://book-swap-64d94.web.app/"
+// app.use(
+//   cors({
+//     origin: ["http://localhost:5173"],
+//     methods: ["POST", "GET", "PATCH", "DELETE", "PUT"],
+//     credentials: true,
+//     exposedHeaders: ["Authorization"],
+//   })
+// );
 app.use(express.json());
 app.use(cookiParser());
 const port = process.env.PORT || 5000;

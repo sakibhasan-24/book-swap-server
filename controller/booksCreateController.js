@@ -111,7 +111,7 @@ const getSingleBook = async (req, res, next) => {
 
 const allBooks = async (req, res, next) => {
   try {
-    const limit = parseInt(req.query.limit) || 9;
+    const limit = parseInt(req.query.limit) || 3;
     const startIndex = parseInt(req.query.startIndex) || 0;
     const sortBy = req.query.sortBy || "createdAt";
     const order = req.query.order || "desc";
@@ -119,6 +119,7 @@ const allBooks = async (req, res, next) => {
     let borrow = req.query.borrow;
     let sell = req.query.sell;
     let fixedPrice = req.query.fixedPrice;
+    console.log(req.query);
     if (borrow === undefined || borrow === "false") {
       borrow = { $in: [true, false] };
     }

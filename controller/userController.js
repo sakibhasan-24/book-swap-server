@@ -6,6 +6,7 @@ const test = async (req, res) => {
 };
 
 const updateUser = async (req, res, next) => {
+  console.log(req.params.id, req.user.id);
   if (req.params.id !== req.user.id) {
     return next(errorHandler(401, "Unauthorized ! you can not access here"));
   }
@@ -55,13 +56,15 @@ const deleteUser = async (req, res, next) => {
 };
 
 const signOut = async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  console.log(user);
   try {
     res.clearCookie("token");
     return res
-      .status(201)
-      .json({ success: true, message: "User Logged Out Successfully" });
+      .status(200)
+      .json({ user, success: true, message: "User Logged Out Successfully" });
   } catch (error) {
-    next(error);
+    res.status(404).json({ success: false, message: "User not found", user });
   }
 };
 

@@ -14,6 +14,6 @@ router.get("/user", test);
 router.get("/user/:id", verifyToken, getSingleUser);
 router.post("/update/:id", verifyToken, updateUser);
 router.delete("/delete/:id", verifyToken, deleteUser);
-router.get("/signout", verifyToken, signOut);
+router.get("/signout", signOut);
 
 module.exports = router;

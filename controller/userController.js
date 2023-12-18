@@ -57,13 +57,15 @@ const deleteUser = async (req, res, next) => {
 
 const signOut = async (req, res, next) => {
   const user = await User.findById(req.user.id);
+
   console.log(user);
   try {
     res.clearCookie("token");
-    return res
+    res
       .status(200)
       .json({ user, success: true, message: "User Logged Out Successfully" });
   } catch (error) {
+    console.log("signOut");
     res.status(404).json({ success: false, message: "User not found", user });
   }
 };

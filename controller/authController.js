@@ -50,7 +50,11 @@ const googleSignIn = async (req, res, next) => {
   const existingUser = await User.findOne({ email: req.body.email });
   if (existingUser) {
     const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
-    res.cookie("token", token, { httpOnly: true });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     res
       .status(200)
       .json({ userData: existingUser, message: "logged in", success: true });
@@ -71,11 +75,18 @@ const googleSignIn = async (req, res, next) => {
     await newUser.save();
     // console.log(newUser);
     const { password: pass, ...rest } = newUser._doc;
-    res.cookie("token", token, { httpOnly: true }).status(200).json({
-      userData: rest,
-      message: "logged in using Google",
-      success: true,
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .status(200)
+      .json({
+        userData: rest,
+        message: "logged in using Google",
+        success: true,
+      });
   }
 };
 module.exports = { signUpApi, signInApi, googleSignIn };

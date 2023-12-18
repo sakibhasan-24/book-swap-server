@@ -11,7 +11,7 @@ const app = express();
 // app.use(cors());
 app.use(
   cors({
-    origin: ["https://book-swap-64d94.web.app/", "http://localhost:5173"],
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );

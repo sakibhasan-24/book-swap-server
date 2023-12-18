@@ -13,6 +13,9 @@ app.use(
   cors({
     origin: ["http://localhost:5173"],
     credentials: true,
+    methods: ["POST", "GET", "PATCH", "DELETE", "PUT"],
+    credentials: true,
+    exposedHeaders: ["Authorization"],
   })
 );
 // "https://book-swap-64d94.web.app/"

@@ -11,11 +11,11 @@ const app = express();
 // app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [
+      "https://book-swap-64d94.web.app",
+      "https://book-swap-64d94.firebaseapp.com",
+    ],
     credentials: true,
-    methods: ["POST", "GET", "PATCH", "DELETE", "PUT"],
-    credentials: true,
-    exposedHeaders: ["Authorization"],
   })
 );
 // "https://book-swap-64d94.web.app/"

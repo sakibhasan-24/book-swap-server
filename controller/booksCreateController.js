@@ -93,6 +93,7 @@ const updateUserBook = async (req, res, next) => {
 const getSingleBook = async (req, res, next) => {
   try {
     const book = await BookListing.findById(req.params.id);
+    console.log(book);
     if (!book) {
       return res.status(404).json({
         success: false,
